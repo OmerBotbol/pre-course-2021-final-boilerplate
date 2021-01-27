@@ -1,9 +1,12 @@
 document.addEventListener("DOMContentLoaded", contentLoaded);
+let count = 0;
 
 function contentLoaded(){
     const addButton = document.getElementById("add-button");
     const prioritySelector = document.getElementById("priority-selector");
-    addButton.addEventListener("click", addToViewSection)
+    addButton.addEventListener("click", addToViewSection);
+    const counter = document.getElementById("counter");
+    counter.textContent = count;
 
     function addToViewSection(){
         const mission = document.getElementById("text-input");
@@ -25,6 +28,8 @@ function contentLoaded(){
         container.append(toDoText);
         listItem.append(container);
         list.append(listItem);
+        count++;
+        counter.textContent = count;
         mission.value = "";
         mission.focus();
     }
