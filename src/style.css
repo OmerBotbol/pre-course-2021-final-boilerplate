@@ -1,0 +1,11 @@
+.todo-container{
+    display: flex;
+}
+
+.todo-priority, .todo-text, .todo-created-at{
+    padding: 5px;
+}
+
+#mission-list{
+    list-style: none;
+}
