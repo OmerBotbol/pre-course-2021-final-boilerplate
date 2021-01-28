@@ -27,8 +27,10 @@ async function contentLoaded(){
         
         data.push(missionData);
         createList(missionData);
-        localStorage.setItem(count, JSON.stringify(missionData));
-
+        let objForServer = {
+            "my-todo": data
+        }
+        postToServer(JSON.stringify(objForServer));
 
         //change the counter
         count++;
@@ -79,23 +81,29 @@ async function contentLoaded(){
     }
 
     async function updatePreviousData(dataArr){
-        for (const key in localStorage) {
-            if (Object.hasOwnProperty.call(localStorage, key)) {
-                const element = JSON.parse(localStorage[key]);
-                dataArr.push(element);
-                createList(element);
+        let response = await fetch("https://api.jsonbin.io/v3/b/6012c1bc6bdb326ce4bc687f/latest");
+        const textObj = await response.json();
+        const text = textObj.record;
+        console.log(text["my-todo"]);
+        for (const input of text["my-todo"]) {
+            if(input !== "empty"){
+                dataArr.push(input);
             }
         }
+        for (const dataObj of dataArr) {
+            createList(dataObj);
+        }
         return dataArr;
-        // const response = await fetch("https://api.jsonbin.io/b/6012904388655a7f320e6cd9");
-        // const text = await response.json();
-        // for (const input of text) {
-        //     dataArr.push(input);
-        // }
-        // for (const dataObj of dataArr) {
-        //     createList(dataObj);
-        // }
-        // return dataArr;
+    }
+
+    async function postToServer(dataArr){
+        let response = await fetch("https://api.jsonbin.io/v3/b/6012c1bc6bdb326ce4bc687f", {
+            method: 'PUT',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            body: dataArr
+          });
     }
 }
 
@@ -103,4 +111,3 @@ function getSQLFormat(time){
     let currentTime = new Date(time);
     return currentTime.toLocaleDateString() + " " + currentTime.toLocaleTimeString() ;
 }
-
