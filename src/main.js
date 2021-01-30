@@ -17,7 +17,7 @@ async function contentLoaded(){
     let data = [];
     data =  await updatePreviousData(data);
     count = data.length
-    counter.textContent = count;
+    changeCounter(count);
     
     
     function addToViewSection(){
@@ -34,7 +34,7 @@ async function contentLoaded(){
 
         //change the counter
         count++;
-        counter.textContent = count;
+        changeCounter(count);
 
         //empty the input section and focus on it
         mission.value = "";
@@ -119,12 +119,13 @@ async function contentLoaded(){
             const deletedMission = event.target.closest("div");
             const deletedName = deletedMission.getElementsByClassName("todo-text")[0].innerText;
             for (const mission of data) {
-                console.log(mission.text !== deletedName);
                 if(mission.text !== deletedName){
                     updatedData.push(mission);
                 }
             }
             deletedMission.remove();
+            count--;
+            changeCounter(count);
             data = updatedData;
             postToServer(data);
         }
@@ -134,6 +135,12 @@ async function contentLoaded(){
         data = [];
         postToServer(data);
         viewSection.innerText = "";
+        count = 0;
+        changeCounter(count);
+    }
+
+    function changeCounter(counting){
+        counter.textContent = counting;
     }
 
 }
