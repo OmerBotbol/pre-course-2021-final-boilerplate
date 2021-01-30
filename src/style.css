@@ -54,7 +54,7 @@ button:hover{
 input{
     height: 19px;
     margin-right: 10px;
-    width: 155px;
+    width: 200px;
 }
 
 .input-line{
@@ -71,15 +71,35 @@ input{
     margin-right: 100px;
 }
 
+#mission-list{
+    list-style: none;
+    margin-right: 100px;
+}
+
+#mission-list > li{
+    display: flex;
+    justify-content:space-between;
+}
+
+#mission-list > li:hover{
+    background-color: rgb(121, 31, 206);
+}
+
 .todo-container{
     display: flex;
+}
+
+.delete-button{
+    right: 0;
+    font-size: 10px;
+    padding: 0x 3px;
+    height: 20px;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 10px;
 }
 
 .todo-priority, .todo-text, .todo-created-at{
     padding: 5px;
 }
 
-#mission-list{
-    list-style: none;
-    margin-right: 100px;
-}

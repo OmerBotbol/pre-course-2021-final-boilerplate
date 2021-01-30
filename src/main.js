@@ -63,20 +63,24 @@ async function contentLoaded(){
         const toDoText = document.createElement("div");
         const toDoCreatedAt = document.createElement("div");
         const priority = document.createElement("div");
+        const deleteButton = document.createElement("button");
     
         const timeFixed = getSQLFormat(itemData.date)
         toDoText.innerText = itemData.text;
         toDoCreatedAt.innerText = timeFixed;
-        priority.innerText = itemData.priority;    
+        priority.innerText = itemData.priority;
+        deleteButton.innerText = "delete"    
     
         container.setAttribute("class", "todo-container");
         priority.setAttribute("class", "todo-priority");
         toDoText.setAttribute("class", "todo-text");
         toDoCreatedAt.setAttribute("class", "todo-created-at");
+        deleteButton.setAttribute("class", "delete-button");
         container.append(priority);
         container.append(toDoCreatedAt);
         container.append(toDoText);
         listItem.append(container);
+        listItem.append(deleteButton);
         list.append(listItem);
     }
 
