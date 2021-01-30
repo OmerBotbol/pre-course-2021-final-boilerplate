@@ -10,10 +10,14 @@ async function contentLoaded(){
     const list = document.getElementById("mission-list");
     const mission = document.getElementById("text-input");
     const viewSection = document.getElementById("view-section");
+    const openSearch = document.getElementById("closed");
+    const closeSearch = document.getElementById("opened");
     addButton.addEventListener("click", addToViewSection);
     sortButton.addEventListener("click", sortTheMissions);
     deleteAllButton.addEventListener("click", deleteAllTasks);
     viewSection.addEventListener("click", deleteTask);
+    openSearch.addEventListener("click", openSearchTab);
+    closeSearch.addEventListener("click", closeSearchTab);
     let data = [];
     data =  await updatePreviousData(data);
     count = data.length
@@ -147,6 +151,30 @@ async function contentLoaded(){
 
     function changeCounter(counting){
         counter.textContent = counting;
+    }
+
+    function openSearchTab(){
+        const searchBox = document.getElementById("search-box");
+        const searchInput = document.createElement("input");
+        const searchButton = document.createElement("button");
+        searchInput.setAttribute("id", "search-input");
+        searchInput.setAttribute("type", "text");
+        searchButton.setAttribute("id", "search-button");
+        searchButton.innerText = "Search";
+        openSearch.style.display = "none"
+        closeSearch.removeAttribute("style")
+        searchBox.append(searchInput);
+        searchBox.append(searchButton);
+    }
+
+    function closeSearchTab(){
+        const searchBox = document.getElementById("search-box");
+        const searchInput = document.getElementById("search-input");
+        const searchButton = document.getElementById("search-button");
+        searchInput.remove();
+        searchButton.remove();
+        closeSearch.style.display = "none"
+        openSearch.removeAttribute("style")
     }
 
 }

@@ -26,7 +26,7 @@ body{
 #search-box{
     position: fixed;
     left: 0px;
-    top: 35vh;
+    top: 7vh;
     background-color: white;
     border: black 1px solid;
     padding: 4px;
