@@ -1,3 +1,34 @@
+/* general */
+
+*{
+    font-family: 'Quicksand', sans-serif;
+}
+
+#main{
+    background-color: rgb(117, 84, 184);
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: max-content;
+    border: black 2px solid;
+    padding-left: 100px;
+    padding-right: 100px;
+    height: 90vh;
+}
+
+h1{
+    text-align: center;
+}
+
+button{
+    background-color: rgb(138, 138, 138);
+
+}
+
+button:hover{
+    background-color: rgb(165, 165, 165);
+}
+
 /* control section */
 
 #control-section{
@@ -8,6 +39,7 @@
     margin-right: auto;
     border: black 2px solid;
     padding: 5px;;
+    background-color: rgb(157, 135, 202);
 }
 
 #control-section > div{
@@ -18,6 +50,7 @@
 input{
     height: 19px;
     margin-right: 10px;
+    width: 155px;
 }
 
 .input-line{
@@ -26,6 +59,13 @@ input{
 }
 
 /* view section */
+
+#view-section{
+    display: block;
+    width: max-content;
+    text-align: left;
+    margin-right: 100px;
+}
 
 .todo-container{
     display: flex;
@@ -37,4 +77,5 @@ input{
 
 #mission-list{
     list-style: none;
+    margin-right: 100px;
 }
