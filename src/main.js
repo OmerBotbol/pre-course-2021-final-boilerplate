@@ -6,11 +6,13 @@ async function contentLoaded(){
     const prioritySelector = document.getElementById("priority-selector");
     const counter = document.getElementById("counter");
     const sortButton = document.getElementById("sort-button");
+    const deleteAllButton = document.getElementById("delete-all-button");
     const list = document.getElementById("mission-list");
     const mission = document.getElementById("text-input");
     const viewSection = document.getElementById("view-section");
     addButton.addEventListener("click", addToViewSection);
     sortButton.addEventListener("click", sortTheMissions);
+    deleteAllButton.addEventListener("click", deleteAllTasks);
     viewSection.addEventListener("click", deleteTask);
     let data = [];
     data =  await updatePreviousData(data);
@@ -28,10 +30,7 @@ async function contentLoaded(){
         
         data.push(missionData);
         createList(missionData);
-        let objForServer = {
-            "my-todo": data
-        }
-        postToServer(JSON.stringify(objForServer));
+        postToServer(data);
 
         //change the counter
         count++;
@@ -101,12 +100,15 @@ async function contentLoaded(){
     }
 
     async function postToServer(dataArr){
+        const objForServer = {
+            "my-todo": dataArr
+        }
         let response = await fetch("https://api.jsonbin.io/v3/b/6012c1bc6bdb326ce4bc687f", {
             method: 'PUT',
             headers: {
             'Content-Type': 'application/json',
             },
-            body: dataArr
+            body: JSON.stringify(objForServer)
           });
     }
 
@@ -124,12 +126,16 @@ async function contentLoaded(){
             }
             deletedMission.remove();
             data = updatedData;
-            let objForServer = {
-                "my-todo": data
-            }
-            postToServer(JSON.stringify(objForServer));
+            postToServer(data);
         }
     }
+
+    function deleteAllTasks(){
+        data = [];
+        postToServer(data);
+        viewSection.innerText = "";
+    }
+
 }
 
 function getSQLFormat(time){
