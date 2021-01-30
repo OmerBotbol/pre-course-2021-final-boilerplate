@@ -1,3 +1,32 @@
+/* control section */
+
+#control-section{
+    position:relative;
+    width: max-content;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border: black 2px solid;
+    padding: 5px;;
+}
+
+#control-section > div{
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+input{
+    height: 19px;
+    margin-right: 10px;
+}
+
+.input-line{
+    height: 25px;
+    margin-right: 10px;
+}
+
+/* view section */
+
 .todo-container{
     display: flex;
 }

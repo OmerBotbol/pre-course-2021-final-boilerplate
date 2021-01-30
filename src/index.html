@@ -6,29 +6,31 @@
     <script src="./main.js"></script>
     <link rel="stylesheet" href="./style.css">
     <title>My TODO List</title>
-      <section id="control-section">
-        <div><span id="counter"></span> TODOS</div>
-        <button id="sort-button">sort</button>
-
-        <input type="text" id="text-input" placeholder="Enter your mission here">
-        <select id="priority-selector">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-        </select>
-        <button id="add-button">add</button>
-
-      </section>
-
-      <section id="view-section">
-
-        <ul id="mission-list"></ul>
-
-      </section>
-
-    <script src="utils.js"></script>
   </head>
-  <body></body>
+  <body>
+    <h1>To-Do List</h1>
+    <section id="control-section">
+      <div><span id="counter"></span> TODOS</div>
+      
+      <input type="text" id="text-input" placeholder="Enter your mission here">
+      <select id="priority-selector" class="input-line">
+        <option value="1">Very Low Importance</option>
+        <option value="2">Low Importance</option>
+        <option value="3">Medium Importance</option>
+        <option value="4">High Importance</option>
+        <option value="5">Very High Importance</option>
+      </select>
+      <button id="add-button" class="input-line pressed-button">Add</button>
+      <button id="sort-button" class="input-line pressed-button">sort</button>
+
+    </section>
+
+    <section id="view-section">
+
+      <ul id="mission-list"></ul>
+
+    </section>
+
+  <script src="utils.js"></script>
+  </body>
 </html>
