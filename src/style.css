@@ -4,8 +4,12 @@
     font-family: 'Quicksand', sans-serif;
 }
 
+body{
+    background-image: url(../pics/background.jpg);
+}
+
 #main{
-    background-color: rgb(117, 84, 184);
+    background-color: rgb(114, 84, 184);
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -39,7 +43,7 @@ button:hover{
     margin-right: auto;
     border: black 2px solid;
     padding: 5px;;
-    background-color: rgb(157, 135, 202);
+    background-color: rgb(142, 135, 202);
 }
 
 #control-section > div{
