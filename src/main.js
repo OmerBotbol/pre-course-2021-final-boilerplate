@@ -12,15 +12,18 @@ async function contentLoaded(){
     const viewSection = document.getElementById("view-section");
     const openSearch = document.getElementById("closed");
     const closeSearch = document.getElementById("opened");
+    const searchInput = document.createElement("input");
+    const searchButton = document.createElement("button");
     addButton.addEventListener("click", addToViewSection);
     sortButton.addEventListener("click", sortTheMissions);
     deleteAllButton.addEventListener("click", deleteAllTasks);
     viewSection.addEventListener("click", deleteTask);
     openSearch.addEventListener("click", openSearchTab);
     closeSearch.addEventListener("click", closeSearchTab);
+    searchButton.addEventListener("click", searchForTask);
     let data = [];
     data =  await updatePreviousData(data);
-    count = data.length
+    count = data.length;
     changeCounter(count);
     
     
@@ -74,11 +77,11 @@ async function contentLoaded(){
         const priority = document.createElement("div");
         const deleteButton = document.createElement("button");
     
-        const timeFixed = getSQLFormat(itemData.date)
+        const timeFixed = getSQLFormat(itemData.date);
         toDoText.innerText = itemData.text;
         toDoCreatedAt.innerText = timeFixed;
         priority.innerText = itemData.priority;
-        deleteButton.innerText = "delete"    
+        deleteButton.innerText = "delete";
     
         container.setAttribute("class", "todo-container");
         priority.setAttribute("class", "todo-priority");
@@ -155,33 +158,46 @@ async function contentLoaded(){
 
     function openSearchTab(){
         const searchBox = document.getElementById("search-box");
-        const searchInput = document.createElement("input");
-        const searchButton = document.createElement("button");
         searchInput.setAttribute("id", "search-input");
         searchInput.setAttribute("type", "text");
         searchButton.setAttribute("id", "search-button");
         searchButton.innerText = "Search";
-        openSearch.style.display = "none"
-        closeSearch.removeAttribute("style")
+        openSearch.style.display = "none";
+        closeSearch.removeAttribute("style");
         searchBox.append(searchInput);
         searchBox.append(searchButton);
     }
 
     function closeSearchTab(){
-        const searchBox = document.getElementById("search-box");
         const searchInput = document.getElementById("search-input");
         const searchButton = document.getElementById("search-button");
         searchInput.remove();
         searchButton.remove();
-        closeSearch.style.display = "none"
-        openSearch.removeAttribute("style")
+        closeSearch.style.display = "none";
+        openSearch.removeAttribute("style");
+        const allText = document.getElementsByClassName("highlight");
+        for (const classes of allText) {
+            console.log(classes.className)
+            if(classes.className.includes("highlight")){
+                classes.className = "todo-text";
+            }
+        }
+    }
+
+    function searchForTask(){
+        const allText = document.getElementsByClassName("todo-text");
+        for (const mission of allText) {
+            if(mission.innerText.includes(searchInput.value)){
+                mission.className += " highlight";
+            }
+        }
     }
 
 }
 
 function getSQLFormat(time){
     let currentTime = new Date(time);
-    return currentTime.toLocaleDateString() + " " + currentTime.toLocaleTimeString() ;
+    return currentTime.toLocaleDateString() + " " + currentTime.toLocaleTimeString();
 }
 
 function colorChanger(priorityLevel){

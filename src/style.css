@@ -32,6 +32,14 @@ body{
     padding: 4px;
 }
 
+#opened, #closed{
+    cursor:pointer;
+}
+
+.highlight{
+    background-color: rgba(255, 255, 0, 0.459);
+}
+
 h1{
     text-align: center;
 }
