@@ -21,6 +21,11 @@ async function contentLoaded(){
     
     
     function addToViewSection(){
+        if(data.length >= 26){
+            alert("you reached the limit of missions. please delete other mission to add a new one");
+            return;
+        }
+
         const currentTime = new Date().getTime();
         const missionData = {
             text: mission.value,
@@ -74,6 +79,7 @@ async function contentLoaded(){
         container.setAttribute("class", "todo-container");
         priority.setAttribute("class", "todo-priority");
         toDoText.setAttribute("class", "todo-text");
+        listItem.setAttribute("class", colorChanger(itemData.priority));
         toDoCreatedAt.setAttribute("class", "todo-created-at");
         deleteButton.setAttribute("class", "delete-button");
         container.append(priority);
@@ -134,7 +140,7 @@ async function contentLoaded(){
     function deleteAllTasks(){
         data = [];
         postToServer(data);
-        viewSection.innerText = "";
+        list.innerText = "";
         count = 0;
         changeCounter(count);
     }
@@ -148,4 +154,18 @@ async function contentLoaded(){
 function getSQLFormat(time){
     let currentTime = new Date(time);
     return currentTime.toLocaleDateString() + " " + currentTime.toLocaleTimeString() ;
+}
+
+function colorChanger(priorityLevel){
+    if(priorityLevel <= 2){
+        console.log(priorityLevel);
+        return "good";
+    } else if(priorityLevel === "3"){
+        console.log(priorityLevel);
+        return "mid";
+    } else {
+        console.log(priorityLevel);
+        return "bad";
+    }
+
 }
