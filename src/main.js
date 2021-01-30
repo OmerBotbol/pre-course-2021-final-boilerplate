@@ -8,11 +8,12 @@ async function contentLoaded(){
     const sortButton = document.getElementById("sort-button");
     const list = document.getElementById("mission-list");
     const mission = document.getElementById("text-input");
+    const viewSection = document.getElementById("view-section");
     addButton.addEventListener("click", addToViewSection);
     sortButton.addEventListener("click", sortTheMissions);
+    viewSection.addEventListener("click", deleteTask);
     let data = [];
     data =  await updatePreviousData(data);
-    console.log(data);
     count = data.length
     counter.textContent = count;
     
@@ -79,8 +80,8 @@ async function contentLoaded(){
         container.append(priority);
         container.append(toDoCreatedAt);
         container.append(toDoText);
+        container.append(deleteButton);
         listItem.append(container);
-        listItem.append(deleteButton);
         list.append(listItem);
     }
 
@@ -88,7 +89,6 @@ async function contentLoaded(){
         let response = await fetch("https://api.jsonbin.io/v3/b/6012c1bc6bdb326ce4bc687f/latest");
         const textObj = await response.json();
         const text = textObj.record;
-        console.log(text["my-todo"]);
         for (const input of text["my-todo"]) {
             if(input !== "empty"){
                 dataArr.push(input);
@@ -108,6 +108,27 @@ async function contentLoaded(){
             },
             body: dataArr
           });
+    }
+
+    function deleteTask(event){
+        const target = event.target.closest("button");
+        let updatedData = [];
+        if(target !== null){
+            const deletedMission = event.target.closest("div");
+            const deletedName = deletedMission.getElementsByClassName("todo-text")[0].innerText;
+            for (const mission of data) {
+                console.log(mission.text !== deletedName);
+                if(mission.text !== deletedName){
+                    updatedData.push(mission);
+                }
+            }
+            deletedMission.remove();
+            data = updatedData;
+            let objForServer = {
+                "my-todo": data
+            }
+            postToServer(JSON.stringify(objForServer));
+        }
     }
 }
 
