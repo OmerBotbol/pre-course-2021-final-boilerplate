@@ -5,11 +5,13 @@
 }
 
 body{
-    background-image: url(../pics/background.jpg);
+    background-image: url(../pics/1489353.jpg);
+    background-size: 100%;
 }
 
 #main{
-    background-color: rgb(114, 84, 184);
+    position: relative;
+    background-color: #d6c9af;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -17,8 +19,17 @@ body{
     border: black 2px solid;
     padding-left: 100px;
     padding-right: 100px;
-    min-height: 90vh;
+    min-height: 95vh;
     height: 90%;
+}
+
+#search-box{
+    position: fixed;
+    left: 0px;
+    top: 35vh;
+    background-color: white;
+    border: black 1px solid;
+    padding: 4px;
 }
 
 h1{
@@ -26,12 +37,13 @@ h1{
 }
 
 button{
-    background-color: rgb(138, 138, 138);
+    background-color: rgb(189, 188, 188);
+    cursor:pointer;
 
 }
 
 button:hover{
-    background-color: rgb(165, 165, 165);
+    background-color: rgb(131, 131, 131);
 }
 
 /* control section */
@@ -44,7 +56,7 @@ button:hover{
     margin-right: auto;
     border: black 2px solid;
     padding: 5px;;
-    background-color: rgb(142, 135, 202);
+    background-color: #a0866a;
 }
 
 #control-section > div{
@@ -83,17 +95,17 @@ input{
 }
 
 .bad{
-    background-color:rgb(132, 0, 255)
+    background-color:#9b7d69;
 }
 .mid{
-    background-color:rgb(172, 71, 255)
+    background-color:#c2a87a;
 }
 .good{
-    background-color:rgb(198, 24, 214)
+    background-color:#cabaa3;
 }
 
 #mission-list > li:hover{
-    background-color: rgb(121, 31, 206);
+    background-color: #e1d7ca;
 }
 
 .todo-container{
