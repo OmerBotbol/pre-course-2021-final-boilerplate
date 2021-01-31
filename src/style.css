@@ -137,7 +137,7 @@ input{
 }
 
 #edit-div{
-    border: black 2px solid;
+    border: black 1px solid;
     width: max-content;
     padding: 15px;
 }

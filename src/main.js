@@ -36,7 +36,9 @@ async function contentLoaded(){
             alert("you reached the limit of missions. please delete other mission to add a new one");
             return;
         }
-
+        if(mission.value === ""){
+            return;
+        }
         const currentTime = new Date().getTime();
         const missionData = {
             text: mission.value,
@@ -92,8 +94,8 @@ async function contentLoaded(){
         container.append(priority);
         container.append(toDoCreatedAt);
         container.append(toDoText);
-        container.append(deleteButton);
         listItem.append(container);
+        listItem.append(deleteButton);
         list.append(listItem);
         changeCounter();
     }
@@ -130,7 +132,7 @@ async function contentLoaded(){
         const target = event.target.closest(".delete-button");
         let updatedData = [];
         if(target !== null){
-            const deletedMission = event.target.closest("div");
+            const deletedMission = event.target.closest("li");
             const deletedName = deletedMission.getElementsByClassName("todo-text")[0].innerText;
             for (const mission of data) {
                 if(mission.text !== deletedName){
