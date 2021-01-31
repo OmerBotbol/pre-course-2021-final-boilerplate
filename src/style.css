@@ -100,6 +100,15 @@ input{
     margin-right: 100px;
 }
 
+.status-image{
+    border-radius: 50%;
+    height: 1em;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
 #mission-list{
     list-style: none;
     margin-right: 100px;

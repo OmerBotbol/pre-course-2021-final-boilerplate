@@ -24,6 +24,7 @@ async function contentLoaded(){
     closeSearch.addEventListener("click", closeSearchTab);
     searchButton.addEventListener("click", searchForTask);
     list.addEventListener("dblclick", editOriginInput)
+    list.addEventListener("click", switchImage)
 
     //setting start condition 
     let data = [];
@@ -79,6 +80,7 @@ async function contentLoaded(){
         const toDoCreatedAt = document.createElement("div");
         const priority = document.createElement("div");
         const deleteButton = document.createElement("button");
+        const statusImage = document.createElement("img");
     
         const timeFixed = getSQLFormat(itemData.date);
         toDoText.innerText = itemData.text;
@@ -92,6 +94,9 @@ async function contentLoaded(){
         listItem.setAttribute("class", colorChanger(itemData.priority));
         toDoCreatedAt.setAttribute("class", "todo-created-at");
         deleteButton.setAttribute("class", "delete-button");
+        statusImage.setAttribute("class", "status-image");
+        statusImage.setAttribute("src", "../pics/x-image.png");
+        container.append(statusImage);
         container.append(priority);
         container.append(toDoCreatedAt);
         container.append(toDoText);
@@ -255,6 +260,20 @@ async function contentLoaded(){
             editDiv.remove();
             postToServer(data);
         });
+    }
+
+
+    function switchImage(event){
+        const target = event.target.closest(".status-image");
+        const currentStatus = target.getAttribute("src");
+        if (target){
+            if(currentStatus === "../pics/x-image.png"){
+                target.setAttribute("src", "../pics/v-image.png");
+            }
+            else{
+                target.setAttribute("src", "../pics/x-image.png");
+            }
+        }
     }
 
 }
