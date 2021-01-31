@@ -1,7 +1,7 @@
-let count = 0;
 document.addEventListener("DOMContentLoaded", contentLoaded);
 
 async function contentLoaded(){
+    //getting all the elements from the HTML
     const addButton = document.getElementById("add-button");
     const prioritySelector = document.getElementById("priority-selector");
     const counter = document.getElementById("counter");
@@ -12,8 +12,10 @@ async function contentLoaded(){
     const viewSection = document.getElementById("view-section");
     const openSearch = document.getElementById("closed");
     const closeSearch = document.getElementById("opened");
-    const searchInput = document.createElement("input");
-    const searchButton = document.createElement("button");
+    const searchInput = document.createElement("input"); //for searchForTask function
+    const searchButton = document.createElement("button"); //for searchForTask function
+
+    // EVENTS
     addButton.addEventListener("click", addToViewSection);
     sortButton.addEventListener("click", sortTheMissions);
     deleteAllButton.addEventListener("click", deleteAllTasks);
@@ -21,13 +23,14 @@ async function contentLoaded(){
     openSearch.addEventListener("click", openSearchTab);
     closeSearch.addEventListener("click", closeSearchTab);
     searchButton.addEventListener("click", searchForTask);
+
+    //setting start condition 
     let data = [];
     data =  await updatePreviousData(data);
-    count = data.length;
-    changeCounter(count);
+    changeCounter();
     
     
-    function addToViewSection(){
+    function addToViewSection(){ //adds new task to the to-do list
         if(data.length >= 17){
             alert("you reached the limit of missions. please delete other mission to add a new one");
             return;
@@ -44,16 +47,12 @@ async function contentLoaded(){
         createList(missionData);
         postToServer(data);
 
-        //change the counter
-        count++;
-        changeCounter(count);
-
         //empty the input section and focus on it
         mission.value = "";
         mission.focus();
     }
 
-    function sortTheMissions(){
+    function sortTheMissions(){ //sorts the tasks in the to-do list by priority
         list.textContent = "";
         data.sort(function(a, b){
             if(a.priority > b.priority){
@@ -69,7 +68,7 @@ async function contentLoaded(){
         }
     }
     
-    function createList(itemData){
+    function createList(itemData){ //creates the element that goes in the view section and insert them
         const container = document.createElement("div");
         const listItem = document.createElement("li");
         const toDoText = document.createElement("div");
@@ -95,9 +94,10 @@ async function contentLoaded(){
         container.append(deleteButton);
         listItem.append(container);
         list.append(listItem);
+        changeCounter();
     }
 
-    async function updatePreviousData(dataArr){
+    async function updatePreviousData(dataArr){ //gets the data that stack in JSONbin
         let response = await fetch("https://api.jsonbin.io/v3/b/6012c1bc6bdb326ce4bc687f/latest");
         const textObj = await response.json();
         const text = textObj.record;
@@ -112,7 +112,7 @@ async function contentLoaded(){
         return dataArr;
     }
 
-    async function postToServer(dataArr){
+    async function postToServer(dataArr){ //updates the data in the JSONbin
         const objForServer = {
             "my-todo": dataArr
         }
@@ -125,7 +125,7 @@ async function contentLoaded(){
           });
     }
 
-    function deleteTask(event){
+    function deleteTask(event){  //deletes one task 
         const target = event.target.closest("button");
         let updatedData = [];
         if(target !== null){
@@ -137,23 +137,22 @@ async function contentLoaded(){
                 }
             }
             deletedMission.remove();
-            count--;
-            changeCounter(count);
             data = updatedData;
+            changeCounter();
             postToServer(data);
         }
     }
 
-    function deleteAllTasks(){
+    function deleteAllTasks(){ //delete all the tasks
         data = [];
         postToServer(data);
         list.innerText = "";
-        count = 0;
-        changeCounter(count);
+        changeCounter();
     }
 
-    function changeCounter(counting){
-        counter.textContent = counting;
+    function changeCounter(){ //counter
+        let count = data.length;
+        counter.textContent = count;
     }
 
     function openSearchTab(){
@@ -195,12 +194,12 @@ async function contentLoaded(){
 
 }
 
-function getSQLFormat(time){
+function getSQLFormat(time){ //sets the date in SQL format
     let currentTime = new Date(time);
     return currentTime.toLocaleDateString() + " " + currentTime.toLocaleTimeString();
 }
 
-function colorChanger(priorityLevel){
+function colorChanger(priorityLevel){ //change the class of element by his priority
     if(priorityLevel <= 2){
         return "good";
     } else if(priorityLevel === "3"){
