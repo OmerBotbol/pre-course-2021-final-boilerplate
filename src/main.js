@@ -37,6 +37,7 @@ async function contentLoaded(){
             return;
         }
         if(mission.value === ""){
+            alert("Please enter a word")
             return;
         }
         const currentTime = new Date().getTime();

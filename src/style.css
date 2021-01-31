@@ -31,6 +31,7 @@ body{
     background-color: white;
     border: black 1px solid;
     padding: 4px;
+    z-index: 1;
 }
 
 #opened, #closed{
@@ -74,9 +75,6 @@ button:hover{
     margin-bottom: 10px;
 }
 
-form{
-    display: inline;
-}
 
 input{
     height: 19px;
