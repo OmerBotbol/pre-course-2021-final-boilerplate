@@ -12,22 +12,24 @@
     <div id="main">
       <div id="search-box"><span id="closed">▶ search</span><span id="opened" style="display: none">▼ search</span></div>
       <h1>To-Do List</h1>
-      <form id="control-section">
+      <section id="control-section">
         <div><span id="counter"></span> TODOS</div>
         
-        <input type="text" id="text-input" placeholder="Enter your mission here" required="required">
-        <select id="priority-selector" class="input-line">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-        </select>
-        <button type="submit" id="add-button" class="input-line pressed-button">Add</button>
+        <form>
+          <input type="text" id="text-input" placeholder="Enter your mission here" required="required">
+          <select id="priority-selector" class="input-line">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+          <button id="add-button" class="input-line pressed-button">Add</button>
+        </form>
         <button id="sort-button" class="input-line pressed-button">Sort</button>
         <button id="delete-all-button" class="input-line pressed-button">Delete All</button>
 
-      </form>
+      </section>
 
       <section id="view-section">
 
