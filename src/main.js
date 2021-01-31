@@ -23,6 +23,7 @@ async function contentLoaded(){
     openSearch.addEventListener("click", openSearchTab);
     closeSearch.addEventListener("click", closeSearchTab);
     searchButton.addEventListener("click", searchForTask);
+    list.addEventListener("dblclick", editOriginInput)
 
     //setting start condition 
     let data = [];
@@ -126,7 +127,7 @@ async function contentLoaded(){
     }
 
     function deleteTask(event){  //deletes one task 
-        const target = event.target.closest("button");
+        const target = event.target.closest(".delete-button");
         let updatedData = [];
         if(target !== null){
             const deletedMission = event.target.closest("div");
@@ -190,6 +191,67 @@ async function contentLoaded(){
                 mission.className += " highlight";
             }
         }
+    }
+
+    function editOriginInput(event){
+        const target = event.target;
+        const targetText = target.closest(".todo-text");
+        const targetPriority = target.closest(".todo-priority");
+        const editDiv = document.createElement("div");
+        const editButton = document.createElement("button");
+        const header = document.createElement("h3");
+        editDiv.append(header);
+        const createType = target.className;
+        if(createType === "todo-text"){
+            const editText = document.createElement("input");
+            editText.setAttribute("type", "text");
+            editText.setAttribute("id", "edit-input");
+            editText.setAttribute("placeholder", "Enter the mission here");
+            editDiv.append(editText);
+        } else if(createType === "todo-priority"){
+            const editSelect = document.createElement("select");
+            for (let i = 1; i <= 5; i++) {
+                const option = document.createElement("option");
+                option.setAttribute("value", i);
+                option.innerText = i;
+                editSelect.append(option);
+            }
+            editSelect.setAttribute("id", "edit-input");
+            editDiv.append(editSelect);
+        } else {
+            return;
+        }
+
+        editDiv.setAttribute("id", "edit-div");
+        editButton.setAttribute("id", "edit-button");
+        editButton.innerText = "Edit";
+        header.innerText = "Edit"
+        editDiv.append(editButton);
+        viewSection.append(editDiv);
+        editButton.addEventListener("click", () => {
+            let editInput = document.getElementById("edit-input");
+            if(targetText){
+                let timeOfChanged = targetText.previousSibling.innerText;
+                for (const mission of data) {
+                    if(getSQLFormat(mission.date) === timeOfChanged){
+                        mission.text = editInput.value
+                    }
+                }
+                targetText.innerText = editInput.value;
+            }
+            else{
+                let timeOfChanged = targetPriority.nextSibling.innerText;
+                for (const mission of data) {
+                    if(getSQLFormat(mission.date) === timeOfChanged){
+                        mission.priority = editInput.value
+                    }
+                }
+                targetPriority.innerText = editInput.value;
+                target.closest("li").setAttribute("class", colorChanger(editInput.value))
+            }
+            editDiv.remove();
+            postToServer(data);
+        });
     }
 
 }
