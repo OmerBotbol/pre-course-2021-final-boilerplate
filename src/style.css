@@ -173,9 +173,12 @@ input{
     }
     
     #main{
-        max-width: 70vw;
+        width: 80vw;
         height: 200px;
         padding-left:10px;
+        padding-right: 10px;
+        display: block;
+        margin: auto;
     }
 
     #search-box{
@@ -183,15 +186,22 @@ input{
     }
 
     #control-section{
-        width: 80vw;
+        width: auto;
         text-align: center;
         display: block;
-        margin-left: 5%;
+        margin-left: auto;
         margin-right: auto;
     }
 
     #view-section{
         margin: 0;
+        width: 100vw;
+    }
+
+    #mission-list{
+        margin: 0px;
+        padding: 0px;
+        max-width: 70vw;
     }
 
     button{
