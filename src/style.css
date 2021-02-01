@@ -167,17 +167,31 @@ input{
     margin: 5px;
 }
 
-@media screen and (max-width: 600px){
+@media (max-width: 600px){
+    h1{
+        text-align: center;
+    }
+    
     #main{
-        max-width: 90vw;
-        height: 50vh;
+        max-width: 70vw;
+        height: 200px;
         padding-left:10px;
+    }
+
+    #search-box{
+        max-width: 80vw;
     }
 
     #control-section{
         width: 80vw;
         text-align: center;
         display: block;
+        margin-left: 5%;
+        margin-right: auto;
+    }
+
+    #view-section{
+        margin: 0;
     }
 
     button{
