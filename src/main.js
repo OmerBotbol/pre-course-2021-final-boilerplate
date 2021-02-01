@@ -262,9 +262,9 @@ async function contentLoaded(){
 
     function switchImage(event){
         const target = event.target.closest(".status-image");
-        const currentStatus = target.getAttribute("src");
-        let timeOfChanged = target.nextSibling.nextSibling.innerText;
         if (target){
+            const currentStatus = target.getAttribute("src");
+            let timeOfChanged = target.nextSibling.nextSibling.innerText;
             if(currentStatus === "../pics/x-image.png"){
                 target.setAttribute("src", "../pics/v-image.png");
                 changeDataByTime(timeOfChanged, "v", "success");
@@ -280,7 +280,6 @@ async function contentLoaded(){
         for (const mission of data) {
             if(getSQLFormat(mission.date) === setTime){
                 mission[prop] = newInput;
-                console.log(mission)
             }
         }
         postToServer(data);
