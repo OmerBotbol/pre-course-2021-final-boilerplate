@@ -23,8 +23,8 @@ async function contentLoaded(){
     openSearch.addEventListener("click", openSearchTab);
     closeSearch.addEventListener("click", closeSearchTab);
     searchButton.addEventListener("click", searchForTask);
-    list.addEventListener("dblclick", editOriginInput)
-    list.addEventListener("click", switchImage)
+    list.addEventListener("dblclick", editOriginInput);
+    list.addEventListener("click", switchImage);
 
     //setting start condition 
     let data = [];
@@ -45,7 +45,8 @@ async function contentLoaded(){
         const missionData = {
             text: mission.value,
             date: currentTime,
-            priority: prioritySelector.value
+            priority: prioritySelector.value,
+            success: "x"
         };
         
         data.push(missionData);
@@ -95,7 +96,12 @@ async function contentLoaded(){
         toDoCreatedAt.setAttribute("class", "todo-created-at");
         deleteButton.setAttribute("class", "delete-button");
         statusImage.setAttribute("class", "status-image");
-        statusImage.setAttribute("src", "../pics/x-image.png");
+        if(itemData.success === "x"){
+            statusImage.setAttribute("src", "../pics/x-image.png");
+        }
+        else{
+            statusImage.setAttribute("src", "../pics/v-image.png");
+        }
         container.append(statusImage);
         container.append(priority);
         container.append(toDoCreatedAt);
@@ -124,8 +130,8 @@ async function contentLoaded(){
     async function postToServer(dataArr){ //updates the data in the JSONbin
         const objForServer = {
             "my-todo": dataArr
-        }
-        let response = await fetch("https://api.jsonbin.io/v3/b/6012c1bc6bdb326ce4bc687f", {
+        };
+        await fetch("https://api.jsonbin.io/v3/b/6012c1bc6bdb326ce4bc687f", {
             method: 'PUT',
             headers: {
             'Content-Type': 'application/json',
@@ -240,25 +246,16 @@ async function contentLoaded(){
             let editInput = document.getElementById("edit-input");
             if(targetText){
                 let timeOfChanged = targetText.previousSibling.innerText;
-                for (const mission of data) {
-                    if(getSQLFormat(mission.date) === timeOfChanged){
-                        mission.text = editInput.value
-                    }
-                }
+                changeDataByTime(timeOfChanged, editInput.value, "text")
                 targetText.innerText = editInput.value;
             }
             else{
                 let timeOfChanged = targetPriority.nextSibling.innerText;
-                for (const mission of data) {
-                    if(getSQLFormat(mission.date) === timeOfChanged){
-                        mission.priority = editInput.value
-                    }
-                }
+                changeDataByTime(timeOfChanged, editInput.value, "priority")
                 targetPriority.innerText = editInput.value;
                 target.closest("li").setAttribute("class", colorChanger(editInput.value))
             }
             editDiv.remove();
-            postToServer(data);
         });
     }
 
@@ -266,14 +263,27 @@ async function contentLoaded(){
     function switchImage(event){
         const target = event.target.closest(".status-image");
         const currentStatus = target.getAttribute("src");
+        let timeOfChanged = target.nextSibling.nextSibling.innerText;
         if (target){
             if(currentStatus === "../pics/x-image.png"){
                 target.setAttribute("src", "../pics/v-image.png");
+                changeDataByTime(timeOfChanged, "v", "success");
             }
             else{
                 target.setAttribute("src", "../pics/x-image.png");
+                changeDataByTime(timeOfChanged, "x", "success");
             }
         }
+    }
+
+    function changeDataByTime(setTime, newInput, prop){
+        for (const mission of data) {
+            if(getSQLFormat(mission.date) === setTime){
+                mission[prop] = newInput;
+                console.log(mission)
+            }
+        }
+        postToServer(data);
     }
 
 }
