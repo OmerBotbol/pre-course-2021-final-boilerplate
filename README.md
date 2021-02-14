@@ -1,7 +1,7 @@
 # Pre Course Project - To-do List 📋
 
 In this project I built a to-do list app.
-link: https://github.com/OmerBotbol/pre-course-2021-final-boilerplate
+link: https://omerbotbol.github.io/pre-course-2021-final-boilerplate/src/
 
 ## How To Use
 1. enter the mission in the mission tab.
