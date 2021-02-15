@@ -112,21 +112,17 @@ async function contentLoaded(){
     }
 
      function updatePreviousData(dataArr){ //gets the data that stack in JSONbin
-        function getDataFromJsonbin(){
-            return fetch("https://api.jsonbin.io/v3/b/6012c1bc6bdb326ce4bc687f/latest").then((response) => {
-                return response.json();
-            })
-        }
-
-        getDataFromJsonbin().then((json)=> {
-            const text = json.record;
-            for (const input of text["my-todo"]) {
-                dataArr.push(input);
-            }
-            for (const dataObj of dataArr) {
-                createList(dataObj);
-            }
-        });
+        fetch("https://api.jsonbin.io/v3/b/6012c1bc6bdb326ce4bc687f/latest").then((response) => {
+            response.json().then((json)=> {
+                const text = json.record;
+                for (const input of text["my-todo"]) {
+                    dataArr.push(input);
+                }
+                for (const dataObj of dataArr) {
+                    createList(dataObj);
+                }
+            });
+        })
         return dataArr;
     }
 
