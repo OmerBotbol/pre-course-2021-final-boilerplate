@@ -111,24 +111,30 @@ async function contentLoaded(){
         changeCounter();
     }
 
-    async function updatePreviousData(dataArr){ //gets the data that stack in JSONbin
-        let response = await fetch("https://api.jsonbin.io/v3/b/6012c1bc6bdb326ce4bc687f/latest");
-        const textObj = await response.json();
-        const text = textObj.record;
-        for (const input of text["my-todo"]) {
-            dataArr.push(input);
+     function updatePreviousData(dataArr){ //gets the data that stack in JSONbin
+        function getDataFromJsonbin(){
+            return fetch("https://api.jsonbin.io/v3/b/6012c1bc6bdb326ce4bc687f/latest").then((response) => {
+                return response.json();
+            })
         }
-        for (const dataObj of dataArr) {
-            createList(dataObj);
-        }
+
+        getDataFromJsonbin().then((json)=> {
+            const text = json.record;
+            for (const input of text["my-todo"]) {
+                dataArr.push(input);
+            }
+            for (const dataObj of dataArr) {
+                createList(dataObj);
+            }
+        });
         return dataArr;
     }
 
-    async function postToServer(dataArr){ //updates the data in the JSONbin
+    function postToServer(dataArr){ //updates the data in the JSONbin
         const objForServer = {
             "my-todo": dataArr
         };
-        await fetch("https://api.jsonbin.io/v3/b/6012c1bc6bdb326ce4bc687f", {
+        fetch("https://api.jsonbin.io/v3/b/6012c1bc6bdb326ce4bc687f", {
             method: 'PUT',
             headers: {
             'Content-Type': 'application/json',
