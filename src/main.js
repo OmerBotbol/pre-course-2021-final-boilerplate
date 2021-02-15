@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", contentLoaded);
 
-async function contentLoaded(){
+function contentLoaded(){
     //getting all the elements from the HTML
     const addButton = document.getElementById("add-button");
     const prioritySelector = document.getElementById("priority-selector");
@@ -28,7 +28,7 @@ async function contentLoaded(){
 
     //setting start condition 
     let data = [];
-    data =  await updatePreviousData(data);
+    data = updatePreviousData(data);
     changeCounter();
     
     
@@ -49,8 +49,9 @@ async function contentLoaded(){
         };
         
         data.push(missionData);
-        createList(missionData);
-        postToServer(data);
+        if(postToServer(data)){
+            createList(missionData);
+        } 
 
         //empty the input section and focus on it
         mission.value = "";
@@ -118,6 +119,8 @@ async function contentLoaded(){
                 for (const input of text["my-todo"]) {
                     dataArr.push(input);
                 }
+                const loader = document.getElementById("loader");
+                loader.setAttribute("hidden", true);
                 for (const dataObj of dataArr) {
                     createList(dataObj);
                 }
@@ -127,15 +130,24 @@ async function contentLoaded(){
     }
 
     function postToServer(dataArr){ //updates the data in the JSONbin
+        const loader = document.getElementById("loader");
+        list.setAttribute("hidden", true);
+        loader.removeAttribute("hidden");
         const objForServer = {
             "my-todo": dataArr
         };
-        fetch("https://api.jsonbin.io/v3/b/6012c1bc6bdb326ce4bc687f", {
+        return fetch("https://api.jsonbin.io/v3/b/6012c1bc6bdb326ce4bc687f", {
             method: 'PUT',
             headers: {
             'Content-Type': 'application/json',
             },
             body: JSON.stringify(objForServer)
+          }).then(()=>{
+            loader.setAttribute("hidden", true);
+            list.removeAttribute("hidden");
+            return true;
+          }).catch(()=>{
+            alert("there is something wrong. please try again later");
           });
     }
 
@@ -150,18 +162,20 @@ async function contentLoaded(){
                     updatedData.push(mission);
                 }
             }
-            deletedMission.remove();
             data = updatedData;
-            changeCounter();
-            postToServer(data);
+            if(postToServer(data)){
+                deletedMission.remove();
+                changeCounter();
+            }
         }
     }
 
     function deleteAllTasks(){ //delete all the tasks
-        data = [];
-        postToServer(data);
-        list.innerText = "";
-        changeCounter();
+        if(postToServer([])){
+            data = [];
+            list.innerText = "";
+            changeCounter();
+        }
     }
 
     function changeCounter(){ //counter
@@ -278,12 +292,14 @@ async function contentLoaded(){
     }
 
     function changeDataByTime(setTime, newInput, prop){
-        for (const mission of data) {
-            if(getSQLFormat(mission.date) === setTime){
-                mission[prop] = newInput;
+        if(postToServer(data)){
+            for (const mission of data) {
+                if(getSQLFormat(mission.date) === setTime){
+                    mission[prop] = newInput;
+                }
             }
+            postToServer(data);
         }
-        postToServer(data);
     }
 
 }
