@@ -41,10 +41,9 @@ async function contentLoaded(){
             alert("Please enter a word")
             return;
         }
-        const currentTime = new Date().getTime();
         const missionData = {
             text: mission.value,
-            date: currentTime,
+            date: new Date().getTime(),
             priority: prioritySelector.value,
             success: "x"
         };
@@ -117,9 +116,7 @@ async function contentLoaded(){
         const textObj = await response.json();
         const text = textObj.record;
         for (const input of text["my-todo"]) {
-            if(input !== "empty"){
-                dataArr.push(input);
-            }
+            dataArr.push(input);
         }
         for (const dataObj of dataArr) {
             createList(dataObj);
