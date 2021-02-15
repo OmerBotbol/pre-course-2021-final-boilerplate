@@ -188,7 +188,6 @@ async function contentLoaded(){
         openSearch.removeAttribute("style");
         const allText = document.getElementsByClassName("highlight");
         for (const classes of allText) {
-            console.log(classes.className)
             if(classes.className.includes("highlight")){
                 classes.className = "todo-text";
             }
@@ -198,6 +197,9 @@ async function contentLoaded(){
     function searchForTask(){
         const allText = document.getElementsByClassName("todo-text");
         for (const mission of allText) {
+            if(mission.className.includes("highlight")){
+                mission.classList.remove("highlight")
+            }
             if(mission.innerText.includes(searchInput.value)){
                 mission.className += " highlight";
             }
