@@ -3,7 +3,10 @@ const app = express();
 const fs= require('fs');
 const {readFileSync} = require('fs');
 
-
+function delay(req, res, next){
+    setTimeout(next, 1000);
+}
+app.use(delay);
 app.use(express.json());
 
 app.get('/b', (req, res) =>{
@@ -21,8 +24,8 @@ app.get('/b', (req, res) =>{
 app.get('/b/:id', (req, res) => {
     const id = req.params.id;
     try{
-        const binContent = fs.readFileSync(`./task/${id}.json`);
-        res.send(binContent);
+        const binContent = fs.readFileSync(`./task/${id}.json`, {encoding: 'utf8', flag: 'r'});
+        res.send(JSON.parse(binContent));
     } catch(e){
         res.status(404).json({"message": "Invalid Record ID"});
     }
@@ -55,7 +58,7 @@ app.put('/b/:id', (req, res) => {
     });
     return;
     }
-    fs.existsSync(`./task/${id}.json`, body);
+    fs.writeFileSync(`./task/${id}.json`, JSON.stringify(body, null, 4));
     const successMessage = {
         success: true,
         data: body,
@@ -75,7 +78,7 @@ app.delete('/b/:id', (req, res) => {
     });
     return;
     }
-        fs.unlinkSync(`./task/${id}`);
+        fs.unlinkSync(`./task/${id}.json`);
         const successMessage = {
             success: true,
             "version": 1,
