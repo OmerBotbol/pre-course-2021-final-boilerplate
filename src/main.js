@@ -113,9 +113,10 @@ function contentLoaded(){
     }
 
      function updatePreviousData(dataArr){ //gets the data that stack in JSONbin
-        fetch("https://api.jsonbin.io/v3/b/6012c1bc6bdb326ce4bc687f/latest").then((response) => {
+        fetch("http://localhost:3000/b/1613653205143").then((response) => {
             response.json().then((json)=> {
-                const text = json.record;
+                // const text = json.record;
+                const text = json;
                 for (const input of text["my-todo"]) {
                     dataArr.push(input);
                 }
@@ -136,7 +137,7 @@ function contentLoaded(){
         const objForServer = {
             "my-todo": dataArr
         };
-        return fetch("https://api.jsonbin.io/v3/b/6012c1bc6bdb326ce4bc687f", {
+        return fetch("http://localhost:3000/b/1613653205143", {
             method: 'PUT',
             headers: {
             'Content-Type': 'application/json',

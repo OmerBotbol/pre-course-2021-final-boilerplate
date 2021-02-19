@@ -4,8 +4,7 @@ const fs= require('fs');
 const {readFileSync} = require('fs');
 
 function delay(req, res, next){
-    setTimeout(()=>{return}, 1000);
-    next();
+    setTimeout(next, 1000);
 }
 app.use(delay);
 app.use(express.json());
